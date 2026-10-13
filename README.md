@@ -15,7 +15,7 @@ Then open <http://localhost:4100>, create a room, and open the invite link in tw
 | Command | What it does |
 |---|---|
 | `npm start` | Starts the server on port 4100 (set `PORT` to change it) |
-| `npm test` | Runs the 19 automated server tests (about 90 seconds) |
+| `npm test` | Runs the 20 automated server tests (about 90 seconds) |
 | `npm run loadtest` | Measures how many rooms one process can handle (see `NOTE.md`) |
 | `python test/browser_check.py` | Plays a full game in three real Chromium browsers (see the file header) |
 
@@ -24,7 +24,7 @@ Then open <http://localhost:4100>, create a room, and open the invite link in tw
 1. Enter a name and create a room. Set the rounds, the draw time and, if you like, your own word list.
 2. Share the room link. Players join from it.
 3. The host starts the game. Each player draws once per round: the drawer picks one of 3 words, a countdown starts, and letters of the word are revealed as time passes.
-4. Everyone else guesses in chat. The faster the correct guess, the more points (500 at the start of the turn, falling to 100 at the end). The drawer earns the average of the guessers' points.
+4. Everyone else guesses in chat. The faster the correct guess, the more points (500 at the start of the turn, falling to 100 at the end). The drawer earns half the average of the guessers' points (players who didn't guess count as 0), so the drawer is rewarded for a clear drawing but always earns less than the people who guessed it.
 5. At the end there is a leaderboard and a stroke-by-stroke replay of every drawing.
 
 ![Lobby](docs/shot_lobby.png)
@@ -60,7 +60,7 @@ Everything is set by environment variables (defaults in `server/config.js`), for
 ```
 server/   index.js (HTTP, WebSocket, limits, persistence)   room.js (game logic)   util.js  words.js  config.js  stats.js
 public/   index.html  style.css  app.js  canvas.js  net.js  replay.js
-test/     game.test.js (19 server tests)   helpers.js   browser_check.py
+test/     game.test.js (20 server tests)   helpers.js   browser_check.py
 loadtest/ loadtest.js   results-linux.json   results-windows.json
 ```
 

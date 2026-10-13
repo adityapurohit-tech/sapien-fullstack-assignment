@@ -11,6 +11,7 @@ const ID_RE = /^[A-Za-z0-9]{1,12}$/;
 const WORD_RE = /^[\p{L}\p{N}][\p{L}\p{N} '-]{0,28}[\p{L}\p{N}]$/u;
 const LETTER_RE = /[\p{L}\p{N}]/u;
 const HINT_FRACTIONS = [0.4, 0.65, 0.85];
+const DRAWER_SHARE = 0.5;
 const isInt = (v, lo, hi) => Number.isInteger(v) && v >= lo && v <= hi;
 
 export const DEFAULT_SETTINGS = { rounds: 3, drawTime: 80, words: null };
@@ -418,10 +419,11 @@ export class Room {
       const eligible = [...this.players.values()].filter((p) => p.id !== this.drawerId);
       const guessers = eligible.filter((p) => p.guessed);
       for (const g of guessers) deltas.push({ id: g.id, pts: g.guessPts });
-      // The drawer earns the average guess score across everyone who was guessing, so a drawing
-      // only half the room understood earns about half as much.
-      const drawerPts = guessers.length && eligible.length ? Math.round(guessers.reduce((s, g) => s + g.guessPts, 0) / eligible.length) : 0;
-      if (drawer && drawerPts) { drawer.score += drawerPts; deltas.push({ id: drawer.id, pts: drawerPts }); }
+      // The drawer earns half the average guess score across everyone who was guessing: a drawing only
+      // half the room understood earns about half as much, and the drawer always earns less than a
+      // guesser who got it, so a 2-player game is not an automatic tie.
+      const drawerPts = guessers.length && eligible.length ? Math.round((DRAWER_SHARE * guessers.reduce((s, g) => s + g.guessPts, 0)) / eligible.length) : 0;
+      if (drawer && drawerPts) { drawer.score += drawerPts; deltas.push({ id: drawer.id, pts: drawerPts, drawer: true }); }
       this.turns.push({ round: this.round, drawerName: drawer ? drawer.name : 'A player who left', word: this.word, log: this.log });
       if (this.turns.length > 150) this.turns.shift();
     }

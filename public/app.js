@@ -306,12 +306,15 @@ function renderOverlay() {
     panel.append(Object.assign(el('div', 'muted small'), { id: 'ovTimer' }));
   } else if (v.phase === 'turn_end') {
     const lt = v.lastTurn || {};
-    if (lt.word) { panel.append(el('h3', '', 'Time\u2019s up!'), el('div', 'muted', 'The word was'), el('div', 'bigword', lt.word)); }
+    if (lt.word) {
+      const title = lt.reason === 'all_guessed' ? 'Everyone guessed it!' : 'Time\u2019s up!';
+      panel.append(el('h3', '', title), el('div', 'muted', 'The word was'), el('div', 'bigword', lt.word));
+    }
     else panel.append(el('h3', '', `${lt.drawerName || 'The drawer'} left the turn`), el('div', 'muted', 'Moving on to the next player…'));
-    const reasons = { all_guessed: 'Everyone guessed it!', drawer_left: 'The drawer left.', time: '' };
+    const reasons = { drawer_left: 'The drawer left.' };
     if (reasons[lt.reason]) panel.append(el('div', 'muted', reasons[lt.reason]));
     const box = el('div', 'deltas');
-    (lt.deltas || []).forEach((d) => { const r = el('div', '', nameOf(d.id)); r.append(el('span', 'pts', `+${d.pts}`)); box.append(r); });
+    (lt.deltas || []).forEach((d) => { const r = el('div', '', nameOf(d.id) + (d.drawer ? ' (drawer)' : '')); r.append(el('span', 'pts', `+${d.pts}`)); box.append(r); });
     if (!(lt.deltas || []).length && lt.word) box.append(el('div', 'muted', 'Nobody guessed this one.'));
     panel.append(box);
   } else if (v.phase === 'game_end') {

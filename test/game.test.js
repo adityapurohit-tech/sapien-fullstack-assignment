@@ -157,6 +157,19 @@ test('if the drawer simply drops, the turn ends after a short grace period', asy
   closeAll(bots);
 });
 
+test('the drawer earns half the average guess score, so a 2-player game is not a tie', async () => {
+  const bots = await makeRoom(server, ['Ann', 'Ben'], { rounds: 1, drawTime: 60, words: ['zebra', 'xylophone', 'quartz'] });
+  const { drawer, guessers, word } = await startAndPick(bots, 0);
+  guessers[0].send({ t: 'chat', text: word });
+  const { pts } = await guessers[0].waitFor((m) => m.t === 'secret');
+  const end = await drawer.waitFor((s) => s.t === 'state' && s.view.phase === 'turn_end', { timeout: 3000 });
+  const d = end.view.lastTurn.deltas.find((x) => x.id === drawer.me);
+  assert.equal(d.pts, Math.round(pts / 2));
+  assert.ok(d.drawer);
+  assert.ok(d.pts < pts, 'the guesser earns more than the drawer');
+  closeAll(bots);
+});
+
 test('the turn ends early once everyone has guessed', async () => {
   const bots = await makeRoom(server, ['Ann', 'Ben', 'Cy'], { rounds: 1, drawTime: 60, words: ['zebra', 'xylophone', 'quartz'] });
   const { guessers, word } = await startAndPick(bots, 0);
