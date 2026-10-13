@@ -247,5 +247,15 @@ process.on('SIGBREAK', () => shutdown('SIGBREAK'));
 process.on('SIGHUP', () => shutdown('SIGHUP'));
 process.on('message', (m) => { if (m === 'shutdown') shutdown('IPC shutdown'); });
 
+server.on('error', (err) => {
+  if (err.code === 'EADDRINUSE') {
+    console.error(`Port ${cfg.PORT} is already in use, probably by another copy of this server.`);
+    console.error('Stop that one first (Ctrl+C in its terminal), or pick another port, e.g. PORT=4000 npm start');
+    console.error('(PowerShell: $env:PORT=4000; npm start)');
+    process.exit(1);
+  }
+  throw err;
+});
+
 loadState();
 server.listen(cfg.PORT, () => console.log(`Scribble room server listening on http://localhost:${cfg.PORT}`));
