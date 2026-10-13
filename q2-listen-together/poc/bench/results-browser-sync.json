@@ -1,0 +1,162 @@
+{
+  "when": "2026-10-10T20:16:46.019Z",
+  "browser": "Chrome/154.0.8037.98",
+  "note": "true error = position the tab audio output is producing minus the position the anchor implies on the real (shared) clock; self-reported = the same against the tab own clock estimate. Sampled every 250 ms while playing. joinToSyncMs is only meaningful for the late joiner (others joined before play).",
+  "failover": {
+    "ownerBefore": "room-node-3",
+    "epochBefore": 1,
+    "ownerAfter": "room-node-1",
+    "epochAfter": 2
+  },
+  "perTab": [
+    {
+      "tab": "host",
+      "samples": 170,
+      "trueErrorMs": {
+        "p50": 0.7,
+        "p95": 1,
+        "max": 1.2
+      },
+      "selfReportedErrorMs": {
+        "p50": 0.1,
+        "p95": 0.4
+      },
+      "within200": "100.0%",
+      "status": "playing",
+      "nudges": 0,
+      "seeks": 0,
+      "joinToSyncMs": null,
+      "epoch": 2,
+      "version": 7,
+      "track": "Metro Lines"
+    },
+    {
+      "tab": "listener-2",
+      "samples": 169,
+      "trueErrorMs": {
+        "p50": 1,
+        "p95": 1.6,
+        "max": 1.8
+      },
+      "selfReportedErrorMs": {
+        "p50": 0.2,
+        "p95": 0.6
+      },
+      "within200": "100.0%",
+      "status": "playing",
+      "nudges": 0,
+      "seeks": 0,
+      "joinToSyncMs": null,
+      "epoch": 2,
+      "version": 7,
+      "track": "Metro Lines"
+    },
+    {
+      "tab": "listener-3",
+      "samples": 170,
+      "trueErrorMs": {
+        "p50": 1.2,
+        "p95": 1.4,
+        "max": 1.6
+      },
+      "selfReportedErrorMs": {
+        "p50": 0.1,
+        "p95": 0.4
+      },
+      "within200": "100.0%",
+      "status": "playing",
+      "nudges": 0,
+      "seeks": 0,
+      "joinToSyncMs": null,
+      "epoch": 2,
+      "version": 7,
+      "track": "Metro Lines"
+    },
+    {
+      "tab": "bad-network (300 ms lag, 80 ms jitter)",
+      "samples": 172,
+      "trueErrorMs": {
+        "p50": 32,
+        "p95": 32.4,
+        "max": 32.5
+      },
+      "selfReportedErrorMs": {
+        "p50": 0.2,
+        "p95": 0.6
+      },
+      "within200": "100.0%",
+      "status": "playing",
+      "nudges": 0,
+      "seeks": 0,
+      "joinToSyncMs": null,
+      "epoch": 2,
+      "version": 7,
+      "track": "Metro Lines"
+    },
+    {
+      "tab": "late-joiner",
+      "samples": 96,
+      "trueErrorMs": {
+        "p50": 5.5,
+        "p95": 19.5,
+        "max": 30.5
+      },
+      "selfReportedErrorMs": {
+        "p50": 4.6,
+        "p95": 20.6
+      },
+      "within200": "100.0%",
+      "status": "playing",
+      "nudges": 1,
+      "seeks": 0,
+      "joinToSyncMs": 287,
+      "epoch": 2,
+      "version": 7,
+      "track": "Metro Lines"
+    }
+  ],
+  "byPhase": {
+    "play": {
+      "samples": 103,
+      "p50": 1,
+      "p95": 32.2,
+      "max": 32.3
+    },
+    "host seeks to 0:40": {
+      "samples": 90,
+      "p50": 1.1,
+      "p95": 32.5,
+      "max": 32.5
+    },
+    "pause, then resume": {
+      "samples": 91,
+      "p50": 1.1,
+      "p95": 32.1,
+      "max": 32.4
+    },
+    "late joiner opens the link mid-song": {
+      "samples": 127,
+      "p50": 1.2,
+      "p95": 32.1,
+      "max": 32.4
+    },
+    "owner node (room-node-3) crashes": {
+      "samples": 130,
+      "p50": 1.3,
+      "p95": 32.1,
+      "max": 32.3
+    },
+    "host skips during recovery window / after takeover": {
+      "samples": 106,
+      "p50": 1.1,
+      "p95": 31.6,
+      "max": 32
+    },
+    "gateway gw-1 restarts (deploy)": {
+      "samples": 130,
+      "p50": 1.1,
+      "p95": 31.6,
+      "max": 31.8
+    }
+  }
+}

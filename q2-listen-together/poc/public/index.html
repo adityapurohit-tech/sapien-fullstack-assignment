@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Listen Together PoC</title>
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%2322c55e'/%3E%3Cpath d='M13 10v12l9-6z' fill='white'/%3E%3C/svg%3E" />
+  </head>
+  <body>
+    <!-- Landing -->
+    <main id="landing" class="landing" hidden>
+      <div class="hero">
+        <div class="logo">&#9654;</div>
+        <h1>Listen Together</h1>
+        <p class="muted">Proof of concept for the room-sync design: state anchors, NTP-style clock sync, drift control, and single-writer room owners with leases and fencing.</p>
+      </div>
+      <form id="createForm" class="card narrow">
+        <h2>Create a room</h2>
+        <label>Your name <input id="hostName" maxlength="24" placeholder="e.g. Aditya" required /></label>
+        <label>Room name <input id="roomName" maxlength="40" placeholder="Friday listening party" /></label>
+        <button class="primary" type="submit">Create room</button>
+        <p class="muted small">You get a link to share. Open it in other browsers or windows to join as other listeners.</p>
+      </form>
+    </main>
+
+    <!-- Room -->
+    <main id="room" class="room" hidden>
+      <header class="topbar">
+        <div class="title">
+          <span class="logo sm">&#9654;</span>
+          <div>
+            <div id="roomTitle" class="room-name">Room</div>
+            <div class="muted small">You are <b id="meName">-</b> <span id="meHost" class="badge host" hidden>HOST</span></div>
+          </div>
+        </div>
+        <div class="share">
+          <input id="shareLink" readonly />
+          <button id="copyLink">Copy link</button>
+        </div>
+        <div class="conn"><span id="connDot" class="dot"></span><span id="connText">connecting</span></div>
+      </header>
+
+      <div class="grid">
+        <section class="col">
+          <div class="card now">
+            <div class="now-head">
+              <div>
+                <div class="muted small">NOW PLAYING</div>
+                <div id="trackTitle" class="track-title">-</div>
+                <div id="trackArtist" class="muted">-</div>
+              </div>
+              <div class="beat-wrap">
+                <div id="beat" class="beat"></div>
+                <div id="beatText" class="muted small mono">bar - · beat -</div>
+              </div>
+            </div>
+            <div id="progress" class="progress" title="Host: click to seek for everyone">
+              <div id="progressFill" class="fill"></div>
+            </div>
+            <div class="times mono small"><span id="tPos">0:00</span><span id="playState" class="state">-</span><span id="tDur">0:00</span></div>
+            <div class="controls">
+              <button id="btnPlay" class="primary host-only">Play</button>
+              <button id="btnSkip" class="host-only">Skip</button>
+              <button id="btnVote">Vote to skip</button>
+              <label class="vol">Vol <input id="vol" type="range" min="0" max="1" step="0.05" value="0.8" /></label>
+            </div>
+            <div id="audioGate" class="gate">
+              <button id="btnAudio" class="primary">Enable audio</button>
+              <span class="muted small">Browsers need one click before playing sound. Sync works without it (visual only).</span>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Shared queue <span class="muted small">(anyone can add)</span></h3>
+            <input id="search" placeholder="Search the catalogue as you type..." autocomplete="off" />
+            <ul id="results" class="list"></ul>
+            <ol id="queue" class="list queue"></ol>
+            <p id="queueEmpty" class="muted small">Queue is empty: the room autoplays the next catalogue track.</p>
+          </div>
+
+          <div class="card">
+            <h3>Listeners <span id="listenerCount" class="muted small"></span></h3>
+            <table class="tbl">
+              <thead><tr><th>Name</th><th>Sync error</th><th>RTT</th><th>State</th></tr></thead>
+              <tbody id="listeners"></tbody>
+            </table>
+            <p class="muted small">Sync error is measured by each client against the room anchor (output position vs. expected position) and reported as telemetry.</p>
+          </div>
+        </section>
+
+        <section class="col">
+          <div class="card">
+            <h3>Your sync</h3>
+            <div class="big-metric"><span id="mErr">-</span><span class="unit">ms</span></div>
+            <div class="muted small center">offset from where the room is (target: within &plusmn;200 ms)</div>
+            <dl class="kv">
+              <dt>Clock offset to server</dt><dd id="mOffset">-</dd>
+              <dt>Best round trip</dt><dd id="mRtt">-</dd>
+              <dt>Clock uncertainty (&le; RTT/2)</dt><dd id="mUnc">-</dd>
+              <dt>Output latency (compensated)</dt><dd id="mOut">-</dd>
+              <dt>Rate nudges / hard seeks</dt><dd id="mCorr">-</dd>
+              <dt>Last command apply latency</dt><dd id="mApply">-</dd>
+              <dt>Join to in-sync</dt><dd id="mJoin">-</dd>
+              <dt>State version</dt><dd id="mVer">-</dd>
+              <dt>Simulated network</dt><dd id="mLag">-</dd>
+            </dl>
+            <p class="small"><a id="badNetLink" href="#" target="_blank">Open this room as a listener on a bad network (300 ms lag, 80 ms jitter)</a></p>
+          </div>
+
+          <div class="card">
+            <h3>Room ownership &amp; chaos</h3>
+            <dl class="kv">
+              <dt>Owner node</dt><dd id="oOwner">-</dd>
+              <dt>Epoch / version</dt><dd id="oEpoch">-</dd>
+              <dt>Lease expires in</dt><dd id="oLease">-</dd>
+            </dl>
+            <div id="nodes" class="nodes"></div>
+            <div id="gateways" class="nodes"></div>
+            <h4>Event log</h4>
+            <ol id="events" class="events mono small"></ol>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <!-- Join dialog -->
+    <div id="joinDialog" class="overlay" hidden>
+      <form id="joinForm" class="card narrow">
+        <h2 id="joinTitle">Join room</h2>
+        <label>Your name <input id="joinName" maxlength="24" required /></label>
+        <button class="primary" type="submit">Join and enable audio</button>
+      </form>
+    </div>
+
+    <div id="toast" class="toast" hidden></div>
+    <script type="module" src="/app.js"></script>
+  </body>
+</html>

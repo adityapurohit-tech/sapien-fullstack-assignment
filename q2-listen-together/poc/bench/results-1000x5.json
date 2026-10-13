@@ -1,0 +1,69 @@
+{
+  "when": "2026-10-10T20:15:05.218Z",
+  "machine": "win32 x64, 13th Gen Intel(R) Core(TM) i5-13450HX, 16 threads, node v22.18.0; client and server on the same machine",
+  "rooms": 1000,
+  "listenersPerRoom": 5,
+  "sockets": 6000,
+  "gatewayProcesses": 4,
+  "clientThreads": 8,
+  "commandsPerRoom": 10,
+  "joinSeconds": 1.3,
+  "joinsDeferred": 0,
+  "connectRetries": 0,
+  "stateMessagesExpected": 10000,
+  "stateMessagesFullyDelivered": 10000,
+  "deliveryLatencyMs": {
+    "p50": 5,
+    "p95": 24,
+    "p99": 36,
+    "max": 75
+  },
+  "lastListenerLatencyMs": {
+    "p50": 7,
+    "p95": 29,
+    "max": 75
+  },
+  "arrivalSpreadMs": {
+    "p50": 5,
+    "p95": 16,
+    "max": 68
+  },
+  "serverCpuPctOfOneCore": 93,
+  "coreProcessCpuPctOfOneCore": 18.1,
+  "socketWritesDuringPhase": 72000,
+  "serverCpuUsPerSocketWrite": 94.8,
+  "gatewayFanoutMs": [
+    {
+      "id": "gw-1",
+      "sockets": 1496,
+      "p50": 0.05,
+      "p99": 0.15,
+      "max": 0.25
+    },
+    {
+      "id": "gw-2",
+      "sockets": 1499,
+      "p50": 0.05,
+      "p99": 0.17,
+      "max": 0.3
+    },
+    {
+      "id": "gw-3",
+      "sockets": 1525,
+      "p50": 0.04,
+      "p99": 0.12,
+      "max": 0.17
+    },
+    {
+      "id": "gw-4",
+      "sockets": 1480,
+      "p50": 0.04,
+      "p99": 0.16,
+      "max": 0.27
+    }
+  ],
+  "serverRssMB": 444,
+  "coreRssMB": 98,
+  "busPublished": 12000,
+  "busDelivered": 39312
+}

@@ -1,0 +1,19 @@
+{
+  "name": "listen-together-poc",
+  "version": "1.0.0",
+  "description": "Proof of concept for the Listen Together room-sync design: state anchors, clock sync, drift control, single-writer room owners with leases and fencing.",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test --test-concurrency=1 test/roomLogic.test.js test/infra.test.js test/integration.test.js",
+    "bench": "node bench/fanout.js",
+    "bench:rooms": "node bench/fanout.js --rooms 1000 --listeners 5"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  }
+}
