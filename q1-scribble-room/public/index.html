@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Scribble Room</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <div id="toast" class="toast" hidden></div>
+  <div id="banner" class="banner" hidden>Connection lost. Reconnecting&hellip;</div>
+
+  <main id="home" class="screen home">
+    <div class="card home-card">
+      <h1>Scribble Room</h1>
+      <p class="sub">Draw it. Guess it. Real-time with friends.</p>
+
+      <label class="field">Your name
+        <input id="homeName" maxlength="20" placeholder="e.g. Aditya" autocomplete="off">
+      </label>
+
+      <section id="createBox">
+        <h2>Create a room</h2>
+        <div class="row">
+          <label class="field">Rounds <select id="setRounds"></select></label>
+          <label class="field">Draw time <select id="setTime"></select></label>
+        </div>
+        <label class="field">Custom word list <span class="muted">(optional, 3 or more, separated by commas or new lines)</span>
+          <textarea id="setWords" rows="3" placeholder="Leave empty to use the built-in list"></textarea>
+        </label>
+        <button id="btnCreate" class="primary">Create room</button>
+      </section>
+
+      <section id="joinBox">
+        <h2 id="joinTitle">Join with a code</h2>
+        <div class="row">
+          <input id="joinCode" maxlength="6" placeholder="ROOM CODE" autocomplete="off" spellcheck="false">
+          <button id="btnJoin">Join</button>
+        </div>
+      </section>
+      <p id="homeError" class="error" hidden></p>
+    </div>
+  </main>
+
+  <main id="room" class="screen" hidden>
+    <header class="topbar">
+      <div class="brand">Scribble Room</div>
+      <div id="roundInfo" class="roundinfo"></div>
+      <div class="hintwrap"><div id="hintLabel" class="hintlabel"></div><div id="hint" class="hint"></div></div>
+      <div id="timer" class="timer">&ndash;</div>
+      <div class="topbtns">
+        <span id="rtt" class="muted small"></span>
+        <button id="btnCopy" class="ghost">Copy invite link</button>
+        <button id="btnLeave" class="ghost">Leave</button>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="card players" id="players" aria-label="Players"></aside>
+
+      <section class="stage">
+        <div class="canvas-wrap" id="canvasWrap">
+          <canvas id="board" width="800" height="600"></canvas>
+          <div id="overlay" class="overlay" hidden></div>
+        </div>
+        <div class="toolbar" id="toolbar"></div>
+      </section>
+
+      <aside class="card chat" aria-label="Chat">
+        <div id="chatLog" class="chat-log"></div>
+        <form id="chatForm" autocomplete="off">
+          <input id="chatInput" maxlength="100" placeholder="Type your guess here&hellip;">
+          <button class="primary">Send</button>
+        </form>
+      </aside>
+    </div>
+  </main>
+
+  <div id="replayModal" class="modal" hidden>
+    <div class="modal-card">
+      <div id="replayLabel" class="replay-label"></div>
+      <canvas id="replayBoard" width="800" height="600"></canvas>
+      <div class="replay-controls">
+        <button id="rpPrev" class="ghost">&laquo; Prev</button>
+        <button id="rpPlay" class="primary">Pause</button>
+        <button id="rpNext" class="ghost">Next &raquo;</button>
+        <select id="rpSpeed"><option value="1">1x</option><option value="2">2x</option><option value="4">4x</option></select>
+        <button id="rpClose" class="ghost">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,118 @@
+{
+  "when": "2026-10-10T19:07:23.599Z",
+  "machine": "16 vCPU 13th Gen Intel(R) Core(TM) i5-13450HX, Windows 11, Node v22.18.0 (bots on the same machine, server at high priority)",
+  "players": 4,
+  "seconds": 15,
+  "results": [
+    {
+      "rooms": 100,
+      "drawingRooms": 100,
+      "sockets": 400,
+      "seconds": 15,
+      "delivered": 103215,
+      "latencyMs": {
+        "p50": 8,
+        "p95": 19,
+        "p99": 26,
+        "max": 40
+      },
+      "serverCpuAvg": 49.3,
+      "serverCpuMax": 61.3,
+      "loopDelayP99ms": 34.9,
+      "msgOutPerSec": 6949,
+      "rssMB": 95,
+      "kbPerRoom": 502,
+      "dropped": 0,
+      "errors": 0,
+      "setupSeconds": 1
+    },
+    {
+      "rooms": 150,
+      "drawingRooms": 150,
+      "sockets": 600,
+      "seconds": 15,
+      "delivered": 157428,
+      "latencyMs": {
+        "p50": 10,
+        "p95": 21,
+        "p99": 27,
+        "max": 40
+      },
+      "serverCpuAvg": 62,
+      "serverCpuMax": 68.9,
+      "loopDelayP99ms": 32.03,
+      "msgOutPerSec": 10562,
+      "rssMB": 105,
+      "kbPerRoom": 403,
+      "dropped": 0,
+      "errors": 0,
+      "setupSeconds": 1.6
+    },
+    {
+      "rooms": 200,
+      "drawingRooms": 200,
+      "sockets": 800,
+      "seconds": 15,
+      "delivered": 229119,
+      "latencyMs": {
+        "p50": 12,
+        "p95": 24,
+        "p99": 36,
+        "max": 90
+      },
+      "serverCpuAvg": 76.9,
+      "serverCpuMax": 87.9,
+      "loopDelayP99ms": 36.7,
+      "msgOutPerSec": 15383,
+      "rssMB": 111,
+      "kbPerRoom": 333,
+      "dropped": 0,
+      "errors": 0,
+      "setupSeconds": 2.1
+    },
+    {
+      "rooms": 250,
+      "drawingRooms": 250,
+      "sockets": 1000,
+      "seconds": 15,
+      "delivered": 365406,
+      "latencyMs": {
+        "p50": 42,
+        "p95": 92,
+        "p99": 112,
+        "max": 155
+      },
+      "serverCpuAvg": 97.1,
+      "serverCpuMax": 105.3,
+      "loopDelayP99ms": 69.86,
+      "msgOutPerSec": 23087,
+      "rssMB": 135,
+      "kbPerRoom": 365,
+      "dropped": 0,
+      "errors": 0,
+      "setupSeconds": 2.4
+    },
+    {
+      "rooms": 300,
+      "drawingRooms": 300,
+      "sockets": 1200,
+      "seconds": 15,
+      "delivered": 935007,
+      "latencyMs": {
+        "p50": 621,
+        "p95": 1412,
+        "p99": 1532,
+        "max": 1694
+      },
+      "serverCpuAvg": 97.4,
+      "serverCpuMax": 104.6,
+      "loopDelayP99ms": 640.16,
+      "msgOutPerSec": 27231,
+      "rssMB": 211,
+      "kbPerRoom": 563,
+      "dropped": 0,
+      "errors": 0,
+      "setupSeconds": 6.6
+    }
+  ]
+}

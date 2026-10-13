@@ -1,0 +1,19 @@
+{
+  "name": "scribble-room",
+  "version": "1.0.0",
+  "description": "Real-time multiplayer drawing and guessing game with a server-authoritative game loop.",
+  "type": "module",
+  "main": "server/index.js",
+  "scripts": {
+    "start": "node server/index.js",
+    "test": "node --test --test-concurrency=1 test/game.test.js",
+    "loadtest": "node loadtest/loadtest.js"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "license": "MIT"
+}
