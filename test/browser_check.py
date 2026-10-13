@@ -11,13 +11,13 @@ It verifies, in real browsers, that:
 Run (server in one terminal, this in another):
     PERSIST=0 npm start
     pip install playwright && playwright install chromium
-    BASE_URL=http://localhost:3000 python3 test/browser_check.py
+    BASE_URL=http://localhost:4100 python3 test/browser_check.py
 """
 import json, time, sys
 from playwright.sync_api import sync_playwright
 
 import os
-BASE = os.environ.get("BASE_URL", "http://localhost:3000")
+BASE = os.environ.get("BASE_URL", "http://localhost:4100")
 SHOTS = os.environ.get("SHOTS_DIR", "docs")
 HASH_JS = """() => { const c=document.getElementById('board'); const d=c.getContext('2d').getImageData(0,0,800,600).data;
   let h=2166136261>>>0; for(let i=0;i<d.length;i+=4){ h^=d[i]; h=Math.imul(h,16777619)>>>0; h^=d[i+1]; h=Math.imul(h,16777619)>>>0; h^=d[i+2]; h=Math.imul(h,16777619)>>>0;} return h; }"""

@@ -10,11 +10,11 @@ Requires Node.js 20 or newer.
 npm install && npm start
 ```
 
-Then open <http://localhost:3000>, create a room, and open the invite link in two or more other tabs or browsers. Each tab is its own player, and refreshing a tab gets the same seat back. To play from other devices on your network, open `http://<your-ip>:3000` (the server listens on all interfaces).
+Then open <http://localhost:4100>, create a room, and open the invite link in two or more other tabs or browsers. Each tab is its own player, and refreshing a tab gets the same seat back. To play from other devices on your network, open `http://<your-ip>:4100` (the server listens on all interfaces).
 
 | Command | What it does |
 |---|---|
-| `npm start` | Starts the server on port 3000 (set `PORT` to change it) |
+| `npm start` | Starts the server on port 4100 (set `PORT` to change it) |
 | `npm test` | Runs the 19 automated server tests (about 90 seconds) |
 | `npm run loadtest` | Measures how many rooms one process can handle (see `NOTE.md`) |
 | `python test/browser_check.py` | Plays a full game in three real Chromium browsers (see the file header) |

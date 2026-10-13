@@ -7,7 +7,7 @@ const num = (name, dflt) => (process.env[name] !== undefined ? Number(process.en
 // Everything tunable lives here, so tests and the load test can shorten timers or lift limits
 // through environment variables without touching the game logic.
 export const cfg = {
-  PORT: num('PORT', 3000),
+  PORT: num('PORT', 4100),
   GRACE_MS: num('GRACE_MS', 30000),               // how long a dropped player keeps their seat and score
   DRAWER_GRACE_MS: num('DRAWER_GRACE_MS', 8000),  // how long a turn waits for a dropped drawer
   CHOOSE_MS: num('CHOOSE_MS', 15000),             // time the drawer has to pick one of 3 words
