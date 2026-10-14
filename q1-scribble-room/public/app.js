@@ -19,7 +19,9 @@ const SIZES = [3, 6, 12, 22];
 const AVATAR_COLORS = ['#ef4444', '#f97316', '#eab308', '#22c55e', '#14b8a6', '#3b82f6', '#8b5cf6', '#ec4899'];
 
 const S = {
-  name: localStorage.getItem('scribble:name') || '',
+  // The name is kept per tab (sessionStorage): a refresh remembers it so the player can rejoin, but every
+  // new tab or newly opened invite link asks for a name, so players sharing a browser never inherit one.
+  name: (() => { try { localStorage.removeItem('scribble:name'); return sessionStorage.getItem('scribble:name') || ''; } catch { return ''; } })(),
   wantRoom: null, // room we should be (re)joining whenever the socket opens
   inRoom: false,
   me: null,
@@ -187,7 +189,7 @@ function validName() {
   const name = $('homeName').value.trim().replace(/\s+/g, ' ').slice(0, 20);
   if (!name) { homeError('Please enter your name first.'); $('homeName').focus(); return null; }
   S.name = name;
-  localStorage.setItem('scribble:name', name);
+  try { sessionStorage.setItem('scribble:name', name); } catch { /* storage unavailable */ }
   homeError('');
   return name;
 }
