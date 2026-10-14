@@ -17,6 +17,7 @@ Then open <http://localhost:4100>, create a room, and open the invite link in tw
 | `npm start` | Starts the server on port 4100 (set `PORT` to change it) |
 | `npm test` | Runs the 20 automated server tests (about 90 seconds) |
 | `npm run loadtest` | Measures how many rooms one process can handle (see `NOTE.md`) |
+| `python docs/build_note_pdf.py` | Rebuilds `docs/Q1_Note.pdf` from `NOTE.md` |
 | `python test/browser_check.py` | Plays a full game in three real Chromium browsers (see the file header) |
 
 ## How to play
