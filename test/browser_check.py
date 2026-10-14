@@ -160,6 +160,7 @@ def main():
         # a second tab in the same browser joins as a new player instead of taking over the first tab's seat
         A2 = pages["Alice"][0].new_page()
         A2.goto(link)
+        assert A2.input_value("#homeName") == "", "a new tab must ask for a name, not reuse another player's"
         A2.fill("#homeName", "Alice")
         A2.click("#btnJoin")
         A2.wait_for_function("window.__scribble.S.inRoom === true", timeout=5000)
